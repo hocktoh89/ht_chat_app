@@ -1,48 +1,46 @@
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatelessWidget {
-  // This widget is the root of your application.
+class ChatScreen extends StatefulWidget {
+  @override
+  State createState() => new ChatScreenState();
+}
 
-//  FocusNode myFocusNode;
-//
-//  @override
-//  void initState() {
-//    super.initState();
-//
-//    myFocusNode = FocusNode();
-//  }
-//
-//  @override
-//  void dispose() {
-//    // Clean up the focus node when the Form is disposed
-//    myFocusNode.dispose();
-//
-//    super.dispose();
-//  }
+class ChatScreenState extends State<ChatScreen> {
+  final TextEditingController _textController = new TextEditingController();
 
+  Widget _buildTextComposer() {
+    return new Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: new Row(
+        children: <Widget>[
+          new Flexible(
+            child: new TextField(
+              controller: _textController,
+              onSubmitted: _handleSubmitted,
+              decoration: new InputDecoration.collapsed(
+                  hintText: "Send a message"),
+            ),
+          ),
+          new Container(                                                 //new
+            margin: new EdgeInsets.symmetric(horizontal: 4.0),           //new
+            child: new IconButton(                                       //new
+                icon: new Icon(Icons.send),                                //new
+                onPressed: () => _handleSubmitted(_textController.text)),  //new
+          ),                                                             //new
+        ],
+      ),
+    );
+  }
+
+  void _handleSubmitted(String text) {
+    _textController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              // The second text field will be focused when a user taps on the
-              // FloatingActionButton
-              TextField(
-                autofocus: true,
-              ),
-            ],
-          ),
-        ),
-//      floatingActionButton: FloatingActionButton(
-//        // When the button is pressed, ask Flutter to focus our text field using
-//        // myFocusNode.
-//        onPressed: () => FocusScope.of(context).requestFocus(myFocusNode),
-//        tooltip: 'Focus Second Text Field',
-//        child: Icon(Icons.edit),
-//      ),
+      appBar: new AppBar(title: new Text("Happy chat")),
+      body: _buildTextComposer(),
     );
   }
 }
