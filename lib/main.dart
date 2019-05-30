@@ -1,21 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ht_chat_app/chatscreen.dart';
+import 'package:ht_chat_app/models/users.dart';
 
 void main() => runApp(MyApp());
-
-final dummySnapshot = [
- {"name": "Filip", "votes": 15},
- {"name": "Abraham", "votes": 14},
- {"name": "Richard", "votes": 11},
- {"name": "Ike", "votes": 10},
- {"name": "Justin", "votes": 1},
-];
 
 class MyApp extends StatelessWidget {
  @override
  Widget build(BuildContext context) {
    return MaterialApp(
-     title: 'Baby Names',
+     title: 'Contacts',
      home: MyHomePage(),
    );
  }
@@ -32,14 +26,14 @@ class _MyHomePageState extends State<MyHomePage> {
  @override
  Widget build(BuildContext context) {
    return Scaffold(
-     appBar: AppBar(title: Text('Baby Name Votes')),
+     appBar: AppBar(title: Text('Contacts')),
      body: _buildBody(context),
    );
  }
 
 Widget _buildBody(BuildContext context) {
  return StreamBuilder<QuerySnapshot>(
-   stream: Firestore.instance.collection('baby').snapshots(),
+   stream: Firestore.instance.collection('users').snapshots(),
    builder: (context, snapshot) {
      if (!snapshot.hasData) return LinearProgressIndicator();
 
@@ -56,10 +50,10 @@ Widget _buildBody(BuildContext context) {
  }
 
  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-   final record = Record.fromSnapshot(data);
+   final user = User.fromSnapshot(data);
 
    return Padding(
-     key: ValueKey(record.name),
+     key: ValueKey(user.name),
      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
      child: Container(
        decoration: BoxDecoration(
@@ -67,29 +61,18 @@ Widget _buildBody(BuildContext context) {
          borderRadius: BorderRadius.circular(5.0),
        ),
        child: ListTile(
-         title: Text(record.name),
-         trailing: Text(record.votes.toString()),
-         onTap: () => print(record),
+         title: Text(user.name),
+         trailing: Text(user.phone),
+         onTap: ()  {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatScreen(contactName: user.name),
+            ),
+          );
+        },
        ),
      ),
    );
  }
-}
-
-class Record {
- final String name;
- final int votes;
- final DocumentReference reference;
-
- Record.fromMap(Map<String, dynamic> map, {this.reference})
-     : assert(map['name'] != null),
-       assert(map['votes'] != null),
-       name = map['name'],
-       votes = map['votes'];
-
- Record.fromSnapshot(DocumentSnapshot snapshot)
-     : this.fromMap(snapshot.data, reference: snapshot.reference);
-
- @override
- String toString() => "Record<$name:$votes>";
 }
