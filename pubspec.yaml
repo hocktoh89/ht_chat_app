@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  shared_preferences: 0.4.3
   cloud_firestore: 0.8.2+3
   firebase_database: 1.0.5
   firebase_auth: 0.7.0

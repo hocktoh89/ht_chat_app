@@ -54,7 +54,7 @@ Widget _buildBody(BuildContext context) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ChatScreen(contactName: user.name),
+              builder: (context) => ChatScreen(contactName: user.name, peerId: user.peerId),
             ),
           );
         },
