@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ht_chat_app/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
-import  'package:ht_chat_app/models/users.dart';
 import 'package:ht_chat_app/pages/contact_page.dart';
 import 'dart:async';
 

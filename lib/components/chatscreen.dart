@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ht_chat_app/chatmessage.dart';
+import 'package:ht_chat_app/components/chatmessage.dart';
 
 class ChatScreen extends StatefulWidget {
   final String contactName;

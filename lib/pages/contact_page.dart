@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ht_chat_app/chatscreen.dart';
+import 'package:ht_chat_app/components/chatscreen.dart';
 import 'package:ht_chat_app/models/users.dart';
 
 class ContactPage extends StatefulWidget {
